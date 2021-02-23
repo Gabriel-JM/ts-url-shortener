@@ -5,6 +5,9 @@
   "private": true,
   "main": "index.js",
   "scripts": {
+    "test": "jest --runInBand --no-cache",
+    "test:unit": "npm test -- --watch -c jest-config/jest-unit.config.js",
+    "test:int": "npm test -- --watch -c jest-config/jest-integration.config.js",
     "build": "tsc --build"
   },
   "keywords": [],

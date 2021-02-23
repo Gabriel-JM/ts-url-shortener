@@ -1,4 +1,4 @@
 const jestConfig = require('./base-config')
-jestConfig.testMatch = ['**/*.test.ts']
+jestConfig.testMatch = ['<rootDir>/**/*.test.ts']
 
 module.exports = jestConfig
