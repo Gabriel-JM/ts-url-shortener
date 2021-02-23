@@ -24,4 +24,19 @@ describe('URL Validator', () => {
       expect(sut.isValid(url)).toBe(false)
     }
   })
+
+  it('should return true, if a valid URL is provided', () => {
+    const sut = makeSut()
+
+    const validUrls = [
+      'http://url.org',
+      'https://url.com/12',
+      'http://url.net.com/path/',
+      'https://url.com.br/path/path-2/123abc'
+    ]
+
+    for(const url of validUrls) {
+      expect(sut.isValid(url)).toBe(true)
+    }
+  })
 })
