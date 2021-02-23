@@ -9,9 +9,9 @@ export function ExpressRouterAdapter(controller: Controller) {
         body: req.body
       }
 
-      const { status, body } = await routerFunction.apply(
+      const { status, body } = await routerFunction.call(
         controller,
-        [httpRequest]
+        httpRequest
       )
 
       res.status(status).json(body)
