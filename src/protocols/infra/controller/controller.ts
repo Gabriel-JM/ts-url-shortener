@@ -1,4 +1,6 @@
+import { ControllerFunction } from './controller-function'
+
 export interface Controller {
-  show: undefined
-  create: undefined
+  show: ControllerFunction
+  create: ControllerFunction
 }
