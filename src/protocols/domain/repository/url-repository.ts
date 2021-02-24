@@ -1,6 +1,6 @@
 import { Repository } from '../../infra/repository/repository'
-import { ShortenedUrl } from '../../models'
+import { IncomingUrl, ShortenedUrl } from '../../models'
 
-export interface IUrlRepository extends Repository<ShortenedUrl> {
+export interface IUrlRepository extends Repository<IncomingUrl, ShortenedUrl> {
   findByUrl(url: string): Promise<ShortenedUrl | null>
 }
