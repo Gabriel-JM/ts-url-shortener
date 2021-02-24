@@ -10,7 +10,15 @@ function makeSut() {
     isValid: jest.fn(() => true)
   }
 
-  const sut = new UrlController(repositorySpy, urlValidatorSpy)
+  const hashGeneratorSpy = {
+    generate: () => 'random_text'
+  }
+
+  const sut = new UrlController(
+    repositorySpy,
+    urlValidatorSpy,
+    hashGeneratorSpy
+  )
 
   return {
     sut,
