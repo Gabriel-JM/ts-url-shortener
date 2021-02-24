@@ -33,6 +33,26 @@ function makeSut() {
 }
 
 describe('URL Controller', () => {
+  describe('Show', () => {
+    it('should return 404 if the provided hash was not found', async () => {
+      const { sut, repositorySpy } = makeSut()
+
+      repositorySpy.findByHash.mockResolvedValueOnce(null)
+
+      const response = await sut.show({
+        address: 'http://localhost',
+        params: { url: 'any_hash' },
+        body: {}
+      })
+
+      expect(response.status).toBe(404)
+      expect(response.body).toEqual({
+        field: 'url',
+        error: 'URL not found or expired'
+      })
+    })
+  })
+
   describe('Create', () => {
     it('should return a 400 response if an invalid url is provided', async () => {
       const { sut, urlValidatorSpy } = makeSut()
