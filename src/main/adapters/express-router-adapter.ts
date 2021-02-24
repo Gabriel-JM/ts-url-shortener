@@ -18,6 +18,12 @@ export function ExpressRouterAdapter(controller: Controller) {
         httpRequest
       )
 
+      const redirectData = body as { redirect: string }
+
+      if(redirectData.redirect) {
+        return res.redirect(redirectData.redirect)
+      }
+
       res.status(status).json(body)
     } 
   }
