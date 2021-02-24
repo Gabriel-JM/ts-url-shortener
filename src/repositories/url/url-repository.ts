@@ -14,8 +14,8 @@ export class UrlRepository implements IUrlRepository {
   }
 
   async save(urlRegistry: IncomingUrl) {
-    const [insertedId] = await this.knex('urls').insert(urlRegistry)
-    const [url] = await this.knex('urls').where('id', insertedId)
+    const [insertedId] = await this.knex('urls').insert(urlRegistry).returning('*')
+    const [url] = await this.knex('urls').where('id', insertedId.id)
 
     return url
   }
