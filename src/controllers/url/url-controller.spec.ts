@@ -2,12 +2,16 @@ import { UrlController } from './url-controller'
 
 function makeSut() {
   const repositorySpy = {
-    findByUrl: jest.fn(),
+    findByHash: jest.fn(),
     save: jest.fn()
   }
 
   const urlValidatorSpy = {
     isValid: jest.fn(() => true)
+  }
+
+  const expirationValidator = {
+    validate: jest.fn()
   }
 
   const hashGeneratorSpy = {
@@ -17,6 +21,7 @@ function makeSut() {
   const sut = new UrlController(
     repositorySpy,
     urlValidatorSpy,
+    expirationValidator,
     hashGeneratorSpy
   )
 
@@ -35,6 +40,7 @@ describe('URL Controller', () => {
       urlValidatorSpy.isValid.mockReturnValueOnce(false)
   
       const request = {
+        address: 'http://localhost',
         params: {},
         body: {
           url: 'invalid.url.com'
@@ -52,17 +58,20 @@ describe('URL Controller', () => {
   
     it('should return a 200 response if a valid url is provided', async () => {
       const { sut, repositorySpy } = makeSut()
-      const urlValue = { url: 'shortened.url.com' }
+      const urlValue = { hash: 'any_hash' }
   
       repositorySpy.save.mockResolvedValueOnce(urlValue)
   
       const response = await sut.create({
+        address: 'http://localhost',
         params: {},
         body: { url: 'full.url.com' }
       })
   
       expect(response.status).toBe(200)
-      expect(response.body).toEqual(urlValue)
+      expect(response.body).toEqual({
+        url: 'http://localhost/any_hash'
+      })
     })
   
     it('should return a 500 response if repository throws some error', async () => {
@@ -74,6 +83,7 @@ describe('URL Controller', () => {
       )
   
       const response = await sut.create({
+        address: 'http://localhost',
         params: {},
         body: { url: 'any.url.com' }
       })
