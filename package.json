@@ -25,7 +25,6 @@
   "dependencies": {
     "express": "^4.17.1",
     "knex": "^0.21.18",
-    "node-url-shortener": "^1.1.11",
     "pg": "^8.5.1",
     "validator": "^13.5.2"
   }
