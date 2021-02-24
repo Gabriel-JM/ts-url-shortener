@@ -1,4 +1,4 @@
-const fifteenDaysInMilliseconds = 1296000000
+import { fifteenDaysInMilliseconds } from '../../resources/constants'
 
 export class ExpirationValidator {
   validate(currentDate: Date, expirationIsoString: string) {
