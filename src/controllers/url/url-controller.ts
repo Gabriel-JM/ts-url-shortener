@@ -1,6 +1,5 @@
 import { IUrlRepository } from '../../protocols/domain'
 import { HttpRequest } from '../../protocols/infra'
-import { ShortenedUrl } from '../../protocols/models'
 import { IHashGenerator, IUrlValidator } from '../../protocols/utils'
 import { IExpirationValidator } from '../../protocols/utils/expiration-validator'
 import { fifteenDaysInMilliseconds } from '../../resources/constants'
@@ -44,7 +43,7 @@ export class UrlController {
 
   async create(request: HttpRequest) {
     try {
-      const { url } = request.body as ShortenedUrl
+      const { url } = request.body as { url: string }
 
       const isUrlValid = this.urlValidator.isValid(url)
 
