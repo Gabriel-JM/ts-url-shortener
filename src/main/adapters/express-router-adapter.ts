@@ -4,7 +4,11 @@ import { Controller, ControllerFunction, HttpRequest } from '../../protocols/inf
 export function ExpressRouterAdapter(controller: Controller) {
   function adapt(routerFunction: ControllerFunction) {
     return async (req: Request, res: Response) => {
+      const { protocol, hostname } = req
+      const port = hostname === 'localhost' ? ':'+process.env.PORT : ''
+
       const httpRequest = <HttpRequest> {
+        address: `${protocol}://${hostname}${port}`,
         params: req.params,
         body: req.body
       }
