@@ -16,6 +16,13 @@ export class HttpResponse {
     }
   }
 
+  static notFound(content: HttpErrorResponseDescription) {
+    return <HttpResponseData> {
+      status: 404,
+      body: content
+    }
+  }
+
   static serverError(content: HttpErrorResponseDescription) {
     return <HttpResponseData> {
       status: 500,
