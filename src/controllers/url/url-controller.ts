@@ -32,8 +32,9 @@ export class UrlController {
         })
       }
 
-      return HttpResponse.ok({ url: shortenedUrl?.url })
+      return HttpResponse.ok({ redirect: shortenedUrl?.url })
     } catch(err) {
+      console.error('\n', err)
       return HttpResponse.serverError({
         field: '',
         error: err.message
@@ -63,9 +64,10 @@ export class UrlController {
       const shortenedUrl = await this.repository.save({ url, hash, expirationDate })
 
       return HttpResponse.ok({
-        url: shortenedUrl.url
+        url: `${request.address}/${shortenedUrl.hash}`
       })
     } catch(err) {
+      console.error('\n', err)
       return HttpResponse.serverError({
         field: '',
         error: err.message
