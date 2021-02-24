@@ -10,7 +10,7 @@ function makeSut() {
     isValid: jest.fn(() => true)
   }
 
-  const expirationValidator = {
+  const expirationValidatorSpy = {
     validate: jest.fn()
   }
 
@@ -21,13 +21,14 @@ function makeSut() {
   const sut = new UrlController(
     repositorySpy,
     urlValidatorSpy,
-    expirationValidator,
+    expirationValidatorSpy,
     hashGeneratorSpy
   )
 
   return {
     sut,
     repositorySpy,
+    expirationValidatorSpy,
     urlValidatorSpy
   }
 }
@@ -49,6 +50,24 @@ describe('URL Controller', () => {
       expect(response.body).toEqual({
         field: 'url',
         error: 'URL not found or expired'
+      })
+    })
+
+    it('should return a 200 response, with a redirect property if the hash was found', async () => {
+      const { sut, repositorySpy, expirationValidatorSpy } = makeSut()
+
+      repositorySpy.findByHash.mockResolvedValueOnce({ url: 'http://url.com' })
+      expirationValidatorSpy.validate.mockReturnValueOnce(true)
+
+      const response = await sut.show({
+        address: 'http://localhost',
+        params: { url: 'any_hash' },
+        body: {}
+      })
+
+      expect(response.status).toBe(200)
+      expect(response.body).toEqual({
+        redirect: 'http://url.com'
       })
     })
   })
