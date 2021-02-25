@@ -12,5 +12,8 @@ RUN npm install --silent --production
 
 COPY --from=builder /usr/app/build ./build
 
+COPY .env.example ./
+COPY .env ./
+
 EXPOSE 3200
 CMD npm start
