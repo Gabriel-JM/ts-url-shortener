@@ -5,7 +5,7 @@
   "private": true,
   "main": "src/main/index.js",
   "scripts": {
-    "start": "node src/main/index.js",
+    "start": "node build/src/main/index.js",
     "dev": "ts-node src/main/index.ts",
     "test": "jest --runInBand --no-cache",
     "test:unit": "npm test -- --watch -c jest-config/jest-unit.config.js",
