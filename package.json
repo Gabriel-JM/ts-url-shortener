@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "private": true,
-  "main": "index.js",
+  "main": "src/main/index.js",
   "scripts": {
     "start": "node src/main/index.js",
     "dev": "ts-node src/main/index.ts",
