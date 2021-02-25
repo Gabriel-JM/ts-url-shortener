@@ -66,3 +66,14 @@ Acesse o link encurtado ou faça um requisição GET e será redirecionado ao li
 ## API Docs
 
 Você pode acessar a documentação da API atráves do caminho `/docs`.
+
+## Testes
+Para executar os testes
+```bash
+  npm test
+```
+
+Testes unitários
+```bash
+  npm run test:unit
+```
