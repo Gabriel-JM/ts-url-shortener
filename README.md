@@ -62,3 +62,7 @@ e irá receber uma resposta com a url encurtada
 ### Acessando a página
 
 Acesse o link encurtado ou faça um requisição GET e será redirecionado ao link correto.
+
+## API Docs
+
+Você pode acessar a documentação da API atráves do caminho `/docs`.
