@@ -13,4 +13,4 @@ RUN npm install --silent --production
 COPY --from=builder /usr/app/build ./build
 
 EXPOSE 3200
-CMD node build/src/index.js
+CMD npm start
