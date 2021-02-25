@@ -1,0 +1,84 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "TypeScript URL Shortener",
+    "version": "1.0.0",
+    "description": "A Node.js + TypeScript URL shortener."
+  },
+  "paths": {
+    "/{hash}": {
+      "get": {
+        "description": "Redireciona para o link correspondente a hash",
+        "tags": [ "URL" ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "hash",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Redireciona para o link correto"
+          },
+          "404": {
+            "description": "Resposta caso a hash não exista ou tenha expirado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "field": "url",
+                  "error": "URL not found or expired"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/encurtador": {
+      "post": {
+        "description": "Envie uma url para gerar um link mais curto.",
+        "tags": [ "URL" ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              },
+              "example": {
+                "url": "http://url.com"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Retorna a link encurtado correspondente ao link provido",
+            "content": {
+              "application/json": {
+                "example": {
+                  "url": "http://localhost/abc123"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Retorna uma resposta para caso tente prover uma URL inválida",
+            "content": {
+              "application/json": {
+                "example": {
+                  "field": "url",
+                  "error": "Invalid URL format"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
