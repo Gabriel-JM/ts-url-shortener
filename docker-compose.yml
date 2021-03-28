@@ -1,4 +1,4 @@
-version: "3"
+version: "3.7"
 
 services:
     db:
@@ -18,3 +18,5 @@ services:
             - db
         ports:
             - "3200:3200"
+        environment:
+            DB_URL: postgresql://postgres:postgres@db/url_shortener_db
