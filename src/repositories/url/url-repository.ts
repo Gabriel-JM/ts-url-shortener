@@ -25,4 +25,12 @@ export class UrlRepository implements IUrlRepository {
 
     return url
   }
+
+  async delete(urlRegistryId: number) {
+    const affectedRows = await this.knex('urls')
+      .where({ id: urlRegistryId })
+      .delete()
+
+    return Boolean(affectedRows)
+  }
 }

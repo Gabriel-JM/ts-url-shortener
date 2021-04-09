@@ -52,4 +52,26 @@ describe('URL Repository', () => {
     expect(result.hash).toBe('hash')
     expect(result.expirationDate).toBe('2021-03-01')
   })
+
+  it('should return true if the delete method succeeds', async () => {
+    const [earlyAddedItemId] = await inMemoryDB('urls').insert({
+      hash: 'hash',
+      url: 'http://url.com',
+      expirationDate: '2021-03-01'
+    })
+
+    const sut = makeSut()
+
+    const result = await sut.delete(earlyAddedItemId)
+
+    expect(result).toBe(true)
+  })
+
+  it('should return false if the method fails', async () => {
+    const sut = makeSut()
+
+    const result = await sut.delete(-1)
+
+    expect(result).toBe(false)
+  })
 })
