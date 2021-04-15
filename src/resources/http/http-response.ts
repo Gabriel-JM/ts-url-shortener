@@ -1,5 +1,8 @@
-import { HttpResponseData } from '../../protocols/infra'
-import { HttpErrorResponseDescription } from '../../protocols/infra/http/http-error-response-description'
+import {
+  HttpErrorResponseDescription,
+  HttpResponseData,
+  HttpServerErrorDescription
+} from '../../protocols/infra'
 
 export class HttpResponse {
   static ok(content: object | object[]) {
@@ -23,10 +26,17 @@ export class HttpResponse {
     }
   }
 
-  static serverError(content: HttpErrorResponseDescription) {
+  static serverError(content: HttpServerErrorDescription) {
+    if(process.env.SHOW_LOGS === 'true') {
+      console.error('\n', content.error)
+    }
+    
     return <HttpResponseData> {
       status: 500,
-      body: content
+      body: {
+        field: content.field,
+        error: content.error.message
+      }
     }
   }
 }
