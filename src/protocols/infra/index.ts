@@ -1,4 +1,6 @@
 export * from './http/http-request'
 export * from './http/http-response-data'
+export * from './http/http-error-response-description'
+export * from './http/http-server-error-description'
 export * from './controller/controller'
 export * from './controller/controller-function'
