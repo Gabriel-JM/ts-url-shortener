@@ -3,7 +3,8 @@ import { UrlController } from './url-controller'
 function makeSut() {
   const repositorySpy = {
     findByHash: jest.fn(),
-    save: jest.fn()
+    save: jest.fn(),
+    delete: jest.fn()
   }
 
   const urlValidatorSpy = {

@@ -33,10 +33,9 @@ export class UrlController {
 
       return HttpResponse.ok({ redirect: shortenedUrl?.url })
     } catch(err) {
-      console.error('\n', err)
       return HttpResponse.serverError({
         field: '',
-        error: err.message
+        error: err
       })
     }
   }
@@ -66,10 +65,9 @@ export class UrlController {
         url: `${request.address}/${shortenedUrl.hash}`
       })
     } catch(err) {
-      console.error('\n', err)
       return HttpResponse.serverError({
         field: '',
-        error: err.message
+        error: err
       })
     }
   }
