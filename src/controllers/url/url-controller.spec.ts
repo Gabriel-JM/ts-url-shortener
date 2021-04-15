@@ -4,7 +4,7 @@ function makeSut() {
   const repositorySpy = {
     findByHash: jest.fn(),
     save: jest.fn(),
-    delete: jest.fn()
+    delete: jest.fn((_id: number) => Promise.resolve(true))
   }
 
   const urlValidatorSpy = {
@@ -70,6 +70,27 @@ describe('URL Controller', () => {
       expect(response.body).toEqual({
         redirect: 'http://url.com'
       })
+    })
+
+    it('should return a 404 response when expirationValidator returns isValid as false', async () => {
+      const { sut, expirationValidatorSpy, repositorySpy } = makeSut()
+
+      repositorySpy.findByHash.mockResolvedValueOnce({ id: 1 })
+      expirationValidatorSpy.validate.mockReturnValueOnce(false)
+
+      const response = await sut.show({
+        address: 'http://localhost',
+        params: { url: 'any_hash' },
+        body: {}
+      })
+
+      expect(response.status).toBe(404)
+      expect(response.body).toEqual({
+        field: 'url',
+        error: 'URL not found or expired'
+      })
+      expect(repositorySpy.delete).toHaveBeenCalledWith(1)
+      expect(repositorySpy.delete).toHaveReturnedWith(Promise.resolve(true))
     })
   })
 

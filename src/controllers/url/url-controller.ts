@@ -24,6 +24,10 @@ export class UrlController {
         shortenedUrl?.expirationDate || ''
       )
 
+      if(!isValid) {
+        await this.repository.delete(shortenedUrl?.id as number)
+      }
+
       if(!isValid || !shortenedUrl) {
         return HttpResponse.notFound({
           field: 'url',
