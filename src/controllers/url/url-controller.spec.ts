@@ -3,6 +3,7 @@ import { UrlController } from './url-controller'
 function makeSut() {
   const repositorySpy = {
     findByHash: jest.fn(),
+    findByUrl: jest.fn(),
     save: jest.fn(),
     delete: jest.fn((_id: number) => Promise.resolve(true))
   }
@@ -129,6 +130,26 @@ describe('URL Controller', () => {
         body: { url: 'full.url.com' }
       })
   
+      expect(response.status).toBe(200)
+      expect(response.body).toEqual({
+        url: 'http://localhost/any_hash'
+      })
+    })
+
+    it('should return a 200 response if a same url is requested', async () => {
+      const { sut, repositorySpy } = makeSut()
+
+      repositorySpy.findByUrl.mockResolvedValueOnce({
+        id: 1,
+        hash: 'any_hash'
+      })
+
+      const response = await sut.create({
+        address: 'http://localhost',
+        params: {},
+        body: { url: 'full.url.com' }
+      })
+
       expect(response.status).toBe(200)
       expect(response.body).toEqual({
         url: 'http://localhost/any_hash'

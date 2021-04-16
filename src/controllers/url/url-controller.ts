@@ -57,6 +57,14 @@ export class UrlController {
         })
       }
 
+      const urlRegistry = await this.repository.findByUrl(url)
+
+      if(urlRegistry) {
+        return HttpResponse.ok({
+          url: `${request.address}/${urlRegistry.hash}`
+        })
+      }
+
       const hash = this.hashGenerator.generate()
 
       const [expirationDate] = new Date(
