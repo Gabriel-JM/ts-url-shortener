@@ -38,6 +38,23 @@ describe('URL Repository', () => {
     expect(result.expirationDate).toBe('2021-03-01')
   })
 
+  it('should return the correct url registry by the given url', async () => {
+    await inMemoryDB('urls').insert({
+      id: null,
+      hash: 'hash',
+      url: 'http://url.com',
+      expirationDate: '2021-03-01'
+    })
+    const sut = makeSut()
+
+    const result = await sut.findByUrl('http://url.com')
+
+    expect(result).toBeDefined()
+    expect(result.url).toBe('http://url.com')
+    expect(result.hash).toBe('hash')
+    expect(result.expirationDate).toBe('2021-03-01')
+  })
+
   it('should return the newly inserted url registry', async () => {
     const sut = makeSut()
 

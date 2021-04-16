@@ -13,6 +13,12 @@ export class UrlRepository implements IUrlRepository {
     return urlRegistry || null
   }
 
+  async findByUrl(url: string) {
+    const [urlRegistry] = await this.knex('urls').where({ url })
+
+    return urlRegistry || null
+  }
+
   async save(urlRegistry: IncomingUrl) {
     const [insertedId] = await this.knex('urls')
       .insert(urlRegistry)
