@@ -11,8 +11,6 @@ export class ExpirationValidator {
       date.getTime() + fifteenDaysInMilliseconds
     )
 
-    console.log(currentDate, expirationDate)
-
     return currentDate < expirationDate
   }
 }
