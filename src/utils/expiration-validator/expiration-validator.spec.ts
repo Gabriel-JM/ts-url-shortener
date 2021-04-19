@@ -13,10 +13,12 @@ describe('Expriration Validator', () => {
   })
 
   it('should return true, if the current date is lower then the expiration date', () => {
-    const expirationDate = '2021-03-01'
+    const expirationDate = new Date()
     const sut = makeSut()
 
-    const isValid = sut.validate(new Date(), expirationDate)
+    expirationDate.setTime(expirationDate.getTime() + 72000)
+
+    const isValid = sut.validate(new Date(), expirationDate.toISOString())
 
     expect(isValid).toBe(true)
   })
