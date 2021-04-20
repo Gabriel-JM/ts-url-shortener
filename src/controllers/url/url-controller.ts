@@ -19,6 +19,13 @@ export class UrlController {
 
       const shortenedUrl = await this.repository.findByHash(hash)
 
+      if(!shortenedUrl) {
+        return HttpResponse.notFound({
+          field: 'url',
+          error: 'URL not found or expired'
+        })
+      }
+
       const isValid = this.expirationValidator.validate(
         new Date(),
         shortenedUrl?.expirationDate || ''
@@ -26,9 +33,6 @@ export class UrlController {
 
       if(!isValid) {
         await this.repository.delete(shortenedUrl?.id as number)
-      }
-
-      if(!isValid || !shortenedUrl) {
         return HttpResponse.notFound({
           field: 'url',
           error: 'URL not found or expired'
