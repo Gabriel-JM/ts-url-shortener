@@ -93,6 +93,37 @@ describe('URL Controller', () => {
       expect(repositorySpy.delete).toHaveBeenCalledWith(1)
       expect(repositorySpy.delete).toHaveReturnedWith(Promise.resolve(true))
     })
+
+    it('should return a 500 response if repository throws some error', async () => {
+      process.env.SHOW_LOGS = 'true'
+      const { sut, repositorySpy } = makeSut()
+      const errorMessage = 'Url registry not found'
+  
+      jest.spyOn(console, 'error').mockImplementationOnce(
+        () => null
+      )
+
+      repositorySpy.findByHash.mockImplementationOnce(
+        async () => { throw new Error(errorMessage) }
+      )
+  
+      const response = await sut.show({
+        address: 'http://localhost',
+        params: {
+          hash: 'any_hash'
+        },
+        body: {}
+      })
+
+      process.env.SHOW_LOGS = 'false'
+      
+      expect(response.status).toBe(500)
+      expect(response.body).toEqual({
+        field: '',
+        error: errorMessage
+      })
+      expect(console.error).toHaveBeenCalled()
+    })
   })
 
   describe('Create', () => {

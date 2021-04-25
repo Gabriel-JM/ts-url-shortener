@@ -28,18 +28,18 @@ export class UrlController {
 
       const isValid = this.expirationValidator.validate(
         new Date(),
-        shortenedUrl?.expirationDate || ''
+        shortenedUrl.expirationDate || ''
       )
 
       if(!isValid) {
-        await this.repository.delete(shortenedUrl?.id as number)
+        await this.repository.delete(shortenedUrl.id as number)
         return HttpResponse.notFound({
           field: 'url',
           error: 'URL not found or expired'
         })
       }
 
-      return HttpResponse.ok({ redirect: shortenedUrl?.url })
+      return HttpResponse.ok({ redirect: shortenedUrl.url })
     } catch(err) {
       return HttpResponse.serverError({
         field: '',
