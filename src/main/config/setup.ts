@@ -6,7 +6,9 @@ import swaggerDocs from '../../../swagger.json'
 export default (app: Application) => {
   app.use(express.json())
   app.use(cors({
-    origin: 'http://localhost:3500'
+    origin: process.env.WEB_URL,
+    methods: 'OPTIONS, GET, POST',
+    maxAge: 86400
   }))
   app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
 }
