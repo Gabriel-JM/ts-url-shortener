@@ -4,7 +4,7 @@ import path from 'path'
 export function connectDatabase() {
   const dbConfig = <Knex.Config> {
     client: 'postgresql',
-    connection: process.env.DB_URL,
+    connection: process.env.DATABASE_URL,
     migrations: {
       extension: 'ts',
       directory: path.join(__dirname, 'migrations')

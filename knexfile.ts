@@ -3,7 +3,7 @@ import Knex from 'knex'
 
 module.exports = <Knex.Config> {
   client: 'postgresql',
-  connection: process.env.DB_URL,
+  connection: process.env.DATABASE_URL,
   migrations: {
     extension: 'ts',
     directory: './src/resources/database/migrations'
