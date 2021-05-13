@@ -1,11 +1,23 @@
 import 'dotenv-safe/config'
 import Knex from 'knex'
+import path from 'path'
+
+const dbFileName = process.env.NODE_ENV === 'test'
+  ? 'test.db'
+  : 'url-shortener.db'
 
 module.exports = <Knex.Config> {
-  client: 'postgresql',
-  connection: process.env.DATABASE_URL,
+  client: 'sqlite3',
+  connection: {
+    filename: path.resolve('src', 'resources', 'database', dbFileName),
+    charset: 'utf8'
+  },
   migrations: {
     extension: 'ts',
-    directory: './src/resources/database/migrations'
+    directory: path.resolve('src', 'resources', 'database', 'migrations')
+  },
+  useNullAsDefault: true,
+  log: {
+    warn: () => null
   }
 }
