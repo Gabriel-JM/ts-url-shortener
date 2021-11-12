@@ -4,8 +4,10 @@ process.env.DB_URL = 'postgresql://postgres:postgres@localhost/url_shortener_tes
 
 module.exports = {
   rootDir: '../src',
-  preset: 'ts-jest',
   testMatch: ['<rootDir>/**/*.(spec|test).ts'],
   testEnvironment: 'node',
+  transform: {
+    '.+\\.ts$': 'ts-jest'
+  },
   coverageDirectory: '../coverage'
 }
